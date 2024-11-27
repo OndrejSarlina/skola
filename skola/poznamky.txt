@@ -1,0 +1,58 @@
+1. struktura projektu
+    /mysite - hlavny priecinok celeho projektu
+        -settings.py - nastavenia celeho projektu
+        -urls.py - 
+    /skola - priecinok pre zariadenie
+        - models.py - definuje modely (objekty) aplikacie a ich atributy a metody, spojenie s databazou
+        - views.py - controller, logika aplikacie, spracovanie dat, posielanie do vystupu
+        -templates/skola/index.html - html template pre výstup tzv. zobrazenia udajov
+        
+    manage.py - spravovanie projektu, subor, cez ktry robime s DJangom
+    db.sqlite3 - databáza, ktorá sa vytvára pri prvom spustení projektu - da sa zmenit v settings.py
+
+2. postup
+    - definicia modelov v models.py
+
+    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ 
+
+        from django.db import models
+
+        # Create your models here.
+
+        class Student(models.Model):
+            meno = models.CharField(max_length=20) # textove pole
+            priezvisko = models.CharField(max_length=20)
+            trieda = models.CharField(max_length=10)
+            
+            def __str__(self):
+                return f"{self.meno} {self.priezvisko} {self.trieda}"
+
+    ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 
+
+    - migracia modelov do databázy
+
+        python manage.py makemigrations
+        python manage.py migrate
+
+    - tieto prikazy musime pouzit vzdy ak zmenime nieco v models.py
+
+    - registracia aplikacie do admin rozhrania
+        subor admin.py
+
+         ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+
+        from .models import Student # importuje modely
+
+        # Register your models here.
+
+        admin.site.register(Student) # zarejestruje modely
+
+        ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ 
+
+    - Vytvorenie prveho superusera
+        
+        python manage.py createsuperuser
+    
+
+
+
